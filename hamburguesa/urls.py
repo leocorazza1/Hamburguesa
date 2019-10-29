@@ -8,7 +8,7 @@ urlpatterns = [
     # url(r'^$', 'hamburguesa.views.home', name='home'),
     # url(r'^blog/', include('blog.urls')),
 
-    url(r'^admin/', include(admin.site.urls)),
+    url(r'^admin/', admin.site.urls),
     url(r'^$', principal , name='principal'),
     url(r'^registro/', registrar),
     url(r'^iniciarSesion/', log),
