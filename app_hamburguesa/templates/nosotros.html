@@ -1,0 +1,48 @@
+{% extends "index.html" %}
+{% load  staticfiles %}
+
+
+    {% block head %}
+        <!-- Breadcrumb Area Start -->
+    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/h5.jpg'%});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-end">
+                <div class="col-12">
+                    <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
+                        <h2 class="room-title">ACERCA DE NOSOTROS</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+    {% endblock %}
+
+
+
+ {% block contenedor %}
+
+    <section class="roberto-about-us-area section-padding-100-0">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-6">
+                    <div class="about-thumbnail pr-lg-5 mb-100 wow fadeInUp" data-wow-delay="100ms">
+                        <img src="{% static 'img/bg-img/logo.jpg'%}" alt="">
+                    </div>
+                </div>
+                <div class="col-12 col-lg-6">
+                    <!-- Section Heading -->
+                    <div class="section-heading wow fadeInUp" data-wow-delay="300ms">
+                        <h6>Acerca de Nosotros</h6>
+                        <h2>Manhattan Hamburgueseria</h2>
+                    </div>
+                    <div class="about-content mb-100 wow fadeInUp" data-wow-delay="500ms">
+                        <p>Somos una empresa recien nacida en la localidad de Realico , ofreciendo distintas variedades para un mismo producto <strong>Hamburguesas</strong> brindando precio y calidad. </p>
+                        <img src="img/core-img/signature.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+  {%endblock%}

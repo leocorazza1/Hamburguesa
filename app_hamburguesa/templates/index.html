@@ -1,0 +1,472 @@
+{% load  staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Title -->
+    <title>Hamburgueseria Manhattan</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="./img/core-img/favicon.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+     <link rel="stylesheet" href="{% static 'Lobibox.min.css'%}"/>
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+</head>
+
+<body>
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader"></div>
+    </div>
+    <!-- /Preloader -->
+
+    <!-- Header Area Start -->
+    <header class="header-area">
+        <!-- Search Form -->
+        <div class="search-form d-flex align-items-center">
+            <div class="container">
+                <form action="index.html" method="get">
+                    <input type="search" name="search-form-input" id="searchFormInput" placeholder="">
+                    <button type="submit"><i class="icon_search"></i></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Top Header Area Start -->
+        <div class="top-header-area">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="top-header-content">
+                            <a href="https://wa.me/5492302502668"><i class="icon_phone"></i> <span>2302502668</span></a>
+                            <a href="#"><i class="icon_mail"></i> <span>Consultas@gmail.com</span></a>
+                            
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="top-header-content">
+                            <!-- Top Social Area -->
+                            <div class="top-social-area ml-auto">
+                                {% if request.user.is_authenticated %}
+                                <a href="#"><strong>Hola  </strong>{{request.user.first_name}}</a>
+                                {%endif%}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- Top Header Area End -->   
+        <!-- Main Header Start -->
+        <div class="main-header-area">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Classy Menu -->
+                    <nav class="classy-navbar justify-content-between" id="robertoNav">
+
+                        <!-- Logo -->
+                        <a href="http://127.0.0.1:8000/"><h4>MANHATTAN</h4></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+                            <!-- Menu Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul id="nav">
+                                    <li class="active"><a href="http://127.0.0.1:8000/simple/">Hamburguesas Simples</a></li>
+                                     <li><a href="http://127.0.0.1:8000/doble/">Hamburguesas Dobles</a>
+                                    {% if not request.user.is_authenticated %}
+                                    <li><a href="#" data-toggle="modal"  data-target="#modal1">Registrarse | Iniciar Sesion</a>
+                                    {%else%}
+                                    <li><a href="http://127.0.0.1:8000/mispedidos/">Mis pedidos</a></li>
+                                    <li><a href="http://127.0.0.1:8000/carrito/">Mi Carrito<span class="badge badge-danger">{{cantidad}}</span></a></li>
+                                    <li><a href="http://127.0.0.1:8000/cerrarSesion/" style="color:tomato">Cerrar Sesion</a>
+                                     {%endif%}
+                                </ul>
+
+                            </div>
+                          
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </header>
+    
+
+
+    {% block head %}
+    
+
+
+
+
+
+
+    
+    
+    {%endblock%}
+
+
+<br>
+  <section class="roberto-service-area ">
+        <div class="container">
+             {%block contenedor %}
+            <div class="row">
+                <div class="col-12">
+
+                    <!-- Section Heading -->
+                    <div class="section-heading text-center wow fadeInUp" data-wow-delay="100ms">
+                        <h6>Hamburgueseria Manhattan</h6>
+                        <h2>Nuestro Catalogo</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <!-- Single Service Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
+                        <img src="{% static 'img/bg-img/h2.jpg'%}" alt="">
+                        <div class="service-title d-flex align-items-center justify-content-center">
+                            <a href="http://127.0.0.1:8000/simple/"><h5>Hamburguesas Simples</h5></a>
+                        </div>
+                    </div>
+                </div>
+
+                 <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
+                        <img src="{% static 'img/bg-img/h3.jpg' %}" alt="">
+                        <div class="service-title d-flex align-items-center justify-content-center">
+                           <a href="http://127.0.0.1:8000/doble/"> <h5>Hamburguesas Dobles</h5></a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Single Service Area -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="500ms">
+                        <img src="{% static 'img/bg-img/papas.jpg' %}" alt="">
+                        <div class="service-title d-flex align-items-center justify-content-center">
+                           <a href="http://127.0.0.1:8000/nosotros/"><h5>Papas</h5></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+             {% endblock %}
+        </div>
+    </section>
+
+
+
+
+{%block modal %}
+<div class="modal fade" id="modal1" >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title" id="titulo">REGISTRARSE</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body" id="registro">
+                  <form  method="POST" action="http://127.0.0.1:8000/registro/">
+                    {% csrf_token %}
+                   <div class="form-group">
+                      <input type="text" class="form-control "  placeholder="Nombre" name="nombre" required="">
+                  </div>
+                  <div class="form-group">
+                      <input type="text" class="form-control "  placeholder="Apellido" name="apellido" required="">
+                  </div>
+                  <div class="form-group">
+                        <input type="text" class="form-control " i placeholder="Contacto" name="contacto" required="">
+                    </div>
+                    <div class="form-group">
+                            <input type="email" class="form-control "  placeholder="Email" name="email" required="">
+                    </div>
+                    <div class="form-group">
+                            <input type="password" class="form-control "  placeholder="Contraseña" name="contra" required="">
+                    </div>
+                    <div class="form-group">
+                            <input type="password" class="form-control "  placeholder="Repetir Contraseña" id="valor" onkeypress="corroborar()" name="rep_contra" required="">
+                    </div>
+            </div>
+            <div class="modal-footer">
+                    <button type="submit" class="btn btn-info" id="botonR">REGISTRARSE</button>
+                    <button type="submit" class="btn btn-outline-success" onclick="ocultarRegistro()" id="tengoCuenta">Ya tengo Cuenta</button>
+                    
+                  </div>
+            </form>
+
+            <div class="modal-body" id="sesion" style="display: none;">
+            <form  method="POST" action="http://127.0.0.1:8000/iniciarSesion/">
+                      {% csrf_token %}
+                      <div class="form-group">
+                              <input type="email" class="form-control "  placeholder="Email" name="email" required="">
+                      </div>
+                      <div class="form-group">
+                              <input type="password" class="form-control " id="contra" placeholder="Contraseña" name="contra" required="">
+                      </div>
+              </div>
+      
+            <!-- Modal footer -->
+           <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" id="volver" style="display: none;">Volver</button>
+              <button type="submit" class="btn btn-success" id="botonI" style="display: none;">INGRESAR</button>
+              
+            </div>
+          </form>
+          
+          <br>
+      
+          </div>
+        </div>
+      </div>
+{%endblock%}
+
+
+
+                   
+                     <br>
+    <br><br>
+    <br>    
+
+    <section class="roberto-cta-area">
+        <div class="container">
+            <div class="cta-content bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/h5.jpg' %});">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-7">
+                        <div class="cta-text mb-50">
+                            <h2>Contactanos para cualquier consulta!</h2>
+                            <h6>Celular 2302-405960</h6>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-5 text-right">
+                        <a href="#" class="btn roberto-btn mb-50">Contactanos</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <br>
+ <br>
+
+    <footer class="footer-area ">
+        <!-- Main Footer Area -->
+        <div class="main-footer-area">
+            <div class="container">
+                <div class="row align-items-baseline justify-content-between">
+                    <!-- Single Footer Widget Area -->
+                    <div class="col-12 col-sm-6 col-lg-3">
+                        <div class="single-footer-widget mb-80">
+                            <!-- Footer Logo -->
+                            <h1 style="color: white;">HAMBURGUESERIA MANHATTAN</h3>
+
+                            <h4>2302-502668</h4>
+                            <span>consultas@gmail.com</span>
+                            <span>Barrio Regazzoli , Realico, La Pampa </span>
+                        </div>
+                    </div>
+
+        <div class="container">
+            <div class="copywrite-content">
+                <div class="row align-items-center">
+                    <div class="col-12 col-md-8">
+                        <!-- Copywrite Text -->
+                        <div class="copywrite-text">
+                            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <!-- Social Info -->
+                        <div class="social-info">
+                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- Footer Area End -->
+
+
+    <!-- **** All JS Files ***** -->
+    <!-- jQuery 2.2.4 -->
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+    <!-- Popper -->
+    <script src="{% static 'js/popper.min.js'%}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <!-- All Plugins -->
+    <script src="{% static 'js/roberto.bundle.js'%}"></script>
+    <!-- Active -->
+    <script src="{% static 'js/default-assets/active.js'%}"></script>
+
+    <script src="{% static 'js/Lobibox.js'%}"></script>
+
+    <script src="{% static 'js/notifications.js'%}"></script>
+
+    <script src="{% static 'js/demo.js'%}"></script>
+
+<script>
+
+
+function ocultarRegistro(){
+
+$("#registro").hide();
+$("#sesion").show();
+$("#titulo").text("Iniciar Sesion");
+$("#botonR").hide();
+$("#botonI").show();
+$("#tengoCuenta").hide();
+$("#volver").show();
+}
+
+$("#volver").click(function(){
+    $("#titulo").text("REGISTRARSE");
+    $("#sesion").hide();
+    $("#registro").show();
+    $("#botonR").show();
+    $("#tengoCuenta").show();
+    $("#volver").hide();
+    $("#botonI").hide();
+});
+
+
+function generarPedido(id){
+
+        $.post("http://127.0.0.1:8000/pedido/",
+          {
+            id: id,
+            csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
+          },
+          function(data, status){
+
+                producto=JSON.parse(data)
+                $("#nombre_producto").text("Pedido: "+producto.nombre_producto);
+                $("#tipo").text(producto.tipo);
+                $("#precio").text("$"+producto.precio);
+                $("#pk").val(id);
+                $("#modal").modal("show");
+
+        });
+          
+}
+
+
+function cancelarpedido(id)
+    { 
+        $.post("http://127.0.0.1:8000/cancelar/",
+          {
+            id: id,
+            csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
+          },
+          function(data, status){
+            if(data){
+
+                  Lobibox.notify('info', {
+                    position: 'top right',
+                    title: 'Notificacion',
+                    msg: 'SU PEDIDO HA SIDO CANCELADO!'
+                });
+
+               $("#"+id).css("display","none");
+            
+            }
+            else
+                {
+                    alert("Error al cancelar Pedido , intente nuevamente!");
+
+                }
+
+        });
+
+    }
+
+function addcarrito(id)
+    { 
+        $.post("http://127.0.0.1:8000/addcarrito/",
+          {
+            id: id,
+            csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
+          },
+          function(data, status){
+            if(data=='True'){
+                //var URLactual = jQuery(location).attr('href');
+                //window.location.href=URLactual;
+                Lobibox.notify('success', {
+                    position: 'top right',
+                    title: 'Notificacion',
+                    msg: 'AÑADIDO AL CARRITO CON EXITO'
+                });
+
+               
+            }
+            else
+                {
+                    Lobibox.notify('info', {
+                    position: 'top right',
+                    title: 'Notificacion',
+                    msg: 'Este elemento ya se añadio al carrito'
+                });
+
+                }
+
+        });
+
+    }
+
+function eliminardelcarrito(id){
+
+    $.post("http://127.0.0.1:8000/delcarrito/",
+          {
+            id: id,
+            csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
+          },
+          function(data, status){
+            if(data){
+                var URLactual = jQuery(location).attr('href');
+                window.location.href=URLactual;
+               
+            }
+            else
+                {
+                    alert("Error al eliminar del Carrito , intente nuevamente");
+
+                }
+
+        });
+
+}
+
+ </script>
+</body>
+
+</html>

@@ -1,0 +1,137 @@
+{% extends "index.html" %}
+{% load  staticfiles %}
+
+
+    {% block head %}
+        <!-- Breadcrumb Area Start -->
+    <div class="breadcrumb-area bg-img bg-overlay jarallax" style="background-image: url({% static 'img/bg-img/h5.jpg'%});">
+        <div class="container h-100">
+            <div class="row h-100 align-items-end">
+                <div class="col-12">
+                    <div class="breadcrumb-content d-flex align-items-center justify-content-between pb-5">
+                        <h2 class="room-title">MI CARRITO</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Breadcrumb Area End -->
+    {% endblock %}
+
+    <br>
+    <br>
+    {% block contenedor %}
+    <div class="roberto-rooms-area">
+        <div class="container">
+            <div class="row">
+                <!--CONTENEDOR DE HAMBURGUESAS INDIVIDUALES-->
+                {% if carrito %}
+                  <div class="table-responsive">
+                        <table class="table">
+                                <thead class="thead-dark">
+                                    <tr>
+                                      <th>Imagen</th>
+                                      <th>Nombre</th>
+                                      <th>Accion</th>
+
+                                    </tr>
+                                  </thead>
+                                <tbody>
+                
+                {% for p in carrito %}
+                         <tr id="{{p.pk}}">
+                             <td>    <div class="post-thumb">
+                                        <img src="{% static 'img/bg-img/29.jpg'%}"  alt="" width="100" height="100" >
+                                    </div>
+                                </td>
+                                <td>{{p.productoC.nombre}}<br>
+                                    <span style="color:green;display:none;">Pedido</span>
+                                </td>
+                                <td class="d-flex">
+                                    <div class="p-2"><a href="#" id="{{p.productoC.pk}}" onclick="generarPedido(this.id)" class="btn btn-success">Pedir</a></div>
+                                    <div class="p-2"><a href="#" id="{{p.productoC.pk}}" onclick="eliminardelcarrito(this.id)" class="btn btn-danger">Eliminar</a></div>
+                                    
+                                </td>
+                         </tr>
+                       
+                {%endfor%}
+                            </tbody>
+                        </table>
+             
+                <!-- FIN CONTENEDOR DE HAMBURGUESAS INDIVIDUALES-->
+
+
+            </div>
+            {%else%}
+        
+            <h3 class="center-text" style="margin-top:3%;">No hay elementos en el carrito</h3>
+
+            {%endif%}
+
+        </div>
+    </div>
+</div>
+
+      {%endblock%}
+      <br>
+    <br>
+
+    {%block modal %}
+      <!-- The Modal -->
+
+      <!-- The Modal -->
+      <div class="modal fade" id="modal" >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+          
+                <!-- Modal Header -->
+                <div class="modal-header">
+                  <h4 class="modal-title"  id="nombre_producto"></h4>
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+          
+                <!-- Modal body -->
+                <div class="modal-body">
+                      <form  method="POST" action="http://127.0.0.1:8000/realizarpedido/">
+                          {% csrf_token %}
+                    <div class="single-recent-post d-flex">
+                                          <!-- Thumb -->
+                          <div class="post-thumb">
+                              <a href="single-blog.html"><img src="{% static 'img/bg-img/31.jpg'%}" alt=""></a>
+                           </div>
+                                          <!-- Content -->
+                          <div class="post-content">
+                              <ul>
+                                  <li><b>Tipo: </b><span id="tipo"></span></li>
+                                  <li><b>Precio/unidad: </b><span id="precio"></span></li>
+                                  <li><b>Cantidad: </b><input type="number" id="cantidad" name="cantidad" min="1" max="8" value="1" style="border-radius: 5px;width:70px;"></li>
+                                  <ol>
+                                      <b>Tilde los Aderezos que desea:</b>
+                                      {%for aderezo in aderezos %}
+                                      <li><input type="checkbox" id=""> {{aderezo.nombre}}</li>
+                                      {%endfor%}
+          
+                                  </ol>
+                              </ul>
+                              
+                          </div>
+                      </div>
+                       <div class="form-group">
+                          <input type="text" class="form-control" id="direccion" placeholder="Direccion de envio" name="direccion" required="">
+                      </div>
+                      <div class="form-group">
+                          <input type="hidden" class="form-control" name="id" id="pk">
+                      </div>
+                </div>
+          
+                <!-- Modal footer -->
+               <div class="modal-footer">
+                  <button type="submit" class="btn btn-info">PEDIR</button>
+          
+                </div>
+              </form>
+          
+              </div>
+            </div>
+          </div>
+{%endblock%}
