@@ -24,7 +24,7 @@
     <div class="roberto-rooms-area">
         <div class="container">
             <div class="row">
-                <!--CONTENEDOR DE HAMBURGUESAS INDIVIDUALES-->
+                <!--CONTENEDOR DE CARRITO INDIVIDUALES-->
                 {% if carrito %}
                   <div class="table-responsive">
                         <table class="table">
@@ -40,8 +40,8 @@
                 
                 {% for p in carrito %}
                          <tr id="{{p.pk}}">
-                             <td>    <div class="post-thumb">
-                                        <img src="{% static 'img/bg-img/29.jpg'%}"  alt="" width="100" height="100" >
+                             <td>   <div class="post-thumb">
+                                        <img src="{{p.productoC.imagen.url}}"  alt="" width="150" height="150" >
                                     </div>
                                 </td>
                                 <td>{{p.productoC.nombre}}<br>
@@ -58,7 +58,7 @@
                             </tbody>
                         </table>
              
-                <!-- FIN CONTENEDOR DE HAMBURGUESAS INDIVIDUALES-->
+                <!-- FIN CONTENEDOR DE PRODUCTOS INDIVIDUALES-->
 
 
             </div>
@@ -77,61 +77,60 @@
     <br>
 
     {%block modal %}
-      <!-- The Modal -->
-
-      <!-- The Modal -->
-      <div class="modal fade" id="modal" >
-            <div class="modal-dialog modal-dialog-centered">
-              <div class="modal-content">
-          
-                <!-- Modal Header -->
-                <div class="modal-header">
-                  <h4 class="modal-title"  id="nombre_producto"></h4>
-                  <button type="button" class="close" data-dismiss="modal">&times;</button>
-                </div>
-          
-                <!-- Modal body -->
-                <div class="modal-body">
-                      <form  method="POST" action="http://127.0.0.1:8000/realizarpedido/">
-                          {% csrf_token %}
-                    <div class="single-recent-post d-flex">
-                                          <!-- Thumb -->
-                          <div class="post-thumb">
-                              <a href="single-blog.html"><img src="{% static 'img/bg-img/31.jpg'%}" alt=""></a>
-                           </div>
-                                          <!-- Content -->
-                          <div class="post-content">
-                              <ul>
-                                  <li><b>Tipo: </b><span id="tipo"></span></li>
-                                  <li><b>Precio/unidad: </b><span id="precio"></span></li>
-                                  <li><b>Cantidad: </b><input type="number" id="cantidad" name="cantidad" min="1" max="8" value="1" style="border-radius: 5px;width:70px;"></li>
-                                  <ol>
-                                      <b>Tilde los Aderezos que desea:</b>
-                                      {%for aderezo in aderezos %}
-                                      <li><input type="checkbox" id=""> {{aderezo.nombre}}</li>
-                                      {%endfor%}
-          
-                                  </ol>
-                              </ul>
-                              
-                          </div>
-                      </div>
-                       <div class="form-group">
-                          <input type="text" class="form-control" id="direccion" placeholder="Direccion de envio" name="direccion" required="">
-                      </div>
-                      <div class="form-group">
-                          <input type="hidden" class="form-control" name="id" id="pk">
-                      </div>
-                </div>
-          
-                <!-- Modal footer -->
-               <div class="modal-footer">
-                  <button type="submit" class="btn btn-info">PEDIR</button>
-          
-                </div>
-              </form>
-          
-              </div>
+    <div class="modal fade" id="modal" >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+      
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title"  id="nombre_producto"></h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body">
+                  <form  method="POST" action="http://127.0.0.1:8000/realizarpedido/">
+                      {% csrf_token %}
+                <div class="single-recent-post d-flex">
+                                      <!-- Thumb -->
+                      <!--<div class="post-thumb">
+                          <a href="single-blog.html"><img src="{% static 'img/bg-img/31.jpg'%}" style="width:100%;" alt=""></a>
+                       </div>-->
+                       <div class="row">
+                         <div class="col-md-1"></div>
+                          <div class="col-md-10">
+                            <img id="imagen" src="" alt="">
+                          </div>
+                       </div>
+                                      <!-- Content -->
+                  </div>
+                  <div class="row">
+                    <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                      <ul class="list-group list-group-horizontal">
+                          <li class="list-group-item" style="font-family:Verdana, Geneva, Tahoma, sans-serif; color:gray;font-size:19px;;" >Tipo: <span id="tipo" style="color:MediumSeaGreen;"></span></li>
+                          <li class="list-group-item" style="font-family:Verdana, Geneva, Tahoma, sans-serif; color:gray;font-size:19px;;"  >Precio: <span id="precio" style="color:MediumSeaGreen;"></span></li>
+                          <li class="list-group-item" style="font-family:Verdana, Geneva, Tahoma, sans-serif; color:gray;font-size:19px;;">Cantidad: <input style="border-radius:5%;margin-left:2%;color:MediumSeaGreen" name="cantidad" type="number" min="1" max="8" value="1"></li>
+                        </ul>
+                        <div class="form-group">
+                            <input  style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:19px;color:gray;margin-top:2%;;" type="text" class="form-control" id="direccion" placeholder="Direccion de envio" name="direccion" required="">
+                        </div>
+                      </div>
+                  </div>
+      
+                  <div class="form-group">
+                      <input type="hidden" class="form-control" name="id" id="pk">
+                  </div>
+            </div>
+            <!-- Modal footer -->
+           <div class="modal-footer row">
+             <div class="col-md-6">
+              <button type="submit" style="width:100%;" class="btn btn-info">PEDIR</button>
+            </div>
+            </div>
+          </form>
+      
           </div>
+        </div>
+      </div>
 {%endblock%}

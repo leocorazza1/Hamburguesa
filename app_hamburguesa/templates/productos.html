@@ -31,30 +31,35 @@
             <div class="row">
                 <!--CONTENEDOR DE HAMBURGUESAS INDIVIDUALES-->
 
-                {% for producto in hamburguesa %}
-
-
+                {% for p in productos %}
                 <div class="col-12 col-lg-8">
                     <!-- Single Room Area -->
                     <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
                         <!-- Room Thumbnail -->
                         <div class="room-thumbnail">
-                            <img src="{% static 'img/bg-img/h4.jpg'%}" alt="">
+                            <img src="{{p.imagen.url}}" alt="">
                         </div>
                         <!-- Room Content -->
                         <div class="room-content">
-                            <h2>{{producto.nombre}}</h2>
-                            
-                            <h4>${{producto.precio}}</h4>
+                            <h2>{{p.nombre}}</h2>
+                            <h4>${{p.precio}}</h4>
                             <div class="room-feature">
-                                <p>{{producto.descripcion}}</p>
+                                <p>{{p.descripcion}}</p>
+                                
+                                <ul>
+                                    {%for aderezo in p.aderezo.all%}
+                                    <li><i class="fa fa-check" style="color:teal"></i>{{aderezo}}</li>
+                                    {%endfor%}
+                                </ul>
                             </div>
+                            
+
                             {% if request.user.is_authenticated %}   
                               <div class="d-flex justify-content-center mb-3">
-                                <div class="p-2"> <a href="#" class="btn btn-outline-success" id="{{producto.pk}}" data-toggle="modal" onclick="generarPedido(this.id)">Pedir Ahora</a></div>
+                                <div class="p-2"> <a href="#" class="btn btn-outline-success" id="{{p.pk}}" data-toggle="modal" onclick="generarPedido(this.id)">Pedir Ahora</a></div>
 
-                                <div class="p-2"><a href="#" class="btn btn-outline-info text-rigth" id="{{producto.pk}}" onclick="addcarrito(this.id)">Añadir al Carrito</a>
-                                </div>
+                                <div class="p-2"><a href="#" class="btn btn-outline-info text-rigth" id="{{p.pk}}" onclick="addcarrito(this.id)">Añadir al Carrito</a>
+                              </div>
 
                               </div>  
                               {%endif%}  
@@ -93,7 +98,7 @@
       
             <!-- Modal body -->
             <div class="modal-body" id="registro">
-                  <form  method="POST" action="http://127.0.0.1:8000/registro/">
+                  <form  method="POST" action="{% url "registro" %}">
                     {% csrf_token %}
                    <div class="form-group">
                       <input type="text" class="form-control "  placeholder="Nombre" name="nombre" required="">
@@ -122,7 +127,7 @@
             </form>
 
             <div class="modal-body" id="sesion" style="display: none;">
-            <form  method="POST" action="http://127.0.0.1:8000/iniciarSesion/">
+            <form  method="POST" action="{% url "login" %}">
                       {% csrf_token %}
                       <div class="form-group">
                               <input type="email" class="form-control "  placeholder="Email" name="email" required="">
@@ -162,35 +167,45 @@
 
       <!-- Modal body -->
       <div class="modal-body">
-            <form  method="POST" action="http://127.0.0.1:8000/realizarpedido/">
+            <form  method="POST" action="{% url "realizarP" %}">
                 {% csrf_token %}
           <div class="single-recent-post d-flex">
                                 <!-- Thumb -->
-                <div class="post-thumb">
+                <!--<div class="post-thumb">
                     <a href="single-blog.html"><img src="{% static 'img/bg-img/31.jpg'%}" style="width:100%;" alt=""></a>
+                 </div>-->
+                 <div class="row">
+                   <div class="col-md-1"></div>
+                    <div class="col-md-10">
+                        
+                          <img id="imagen" src="" alt="Imagen del Producto" >
+                        
+                    </div>
                  </div>
                                 <!-- Content -->
-                <div class="post-content">
-                    <ul>
-                        <li><b>Tipo: </b><span id="tipo"></span></li>
-                        <li><b>Precio/unidad: </b><span id="precio"></span></li>
-                        <li><b>Cantidad: </b><input type="number" id="cantidad" name="cantidad" min="1" max="8" value="1" style="border-radius: 5px;width:70px;"></li>
-                    </ul>
-                    
+            </div>
+            <div class="row">
+              <div class="col-md-1"></div>
+              <div class="col-md-10">
+                <ul class="list-group list-group-horizontal">
+                    <li class="list-group-item" style="font-family:Verdana, Geneva, Tahoma, sans-serif; color:gray;font-size:18px;;"  >Precio/Unidad: <span id="precio" style="color:MediumSeaGreen;"></span></li>
+                    <li class="list-group-item" style="font-family:Verdana, Geneva, Tahoma, sans-serif; color:gray;font-size:18px;;">Cantidad: <input style="border-radius:5%;margin-left:2%;color:MediumSeaGreen" name="cantidad" type="number" min="1" max="8" value="1"></li>
+                  </ul>
+                  <div class="form-group">
+                      <input  style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:18px;color:MediumSeaGreen;margin-top:2%;;" type="text" class="form-control" id="direccion" placeholder="Direccion de envio" name="direccion" required="">
+                  </div>
                 </div>
             </div>
-             <div class="form-group">
-                <input type="text" class="form-control" id="direccion" placeholder="Direccion de envio" name="direccion" required="">
-            </div>
+
             <div class="form-group">
                 <input type="hidden" class="form-control" name="id" id="pk">
             </div>
       </div>
-
       <!-- Modal footer -->
-     <div class="modal-footer">
-        <button type="submit" class="btn btn-info">PEDIR</button>
-
+     <div class="modal-footer row">
+       <div class="col-md-6">
+        <button type="submit" style="width:100%;" class="btn btn-info">PEDIR</button>
+      </div>
       </div>
     </form>
 

@@ -20,14 +20,16 @@ def registrar(request):
 		email=request.POST['email']
 		contra=request.POST['contra']
 		rep_contra=request.POST['rep_contra']
-		try:
-			usuario=User.objects.create_user(username=email,email=email,password=contra,first_name=nombre,last_name=apellido)
-		except IntegrityError:
-			#mensaje de error por duplicacion de usuario
-			return redirect('principal')
-		usuario.save()
-		c=cliente(nombre=nombre,apellido=apellido,contacto=contacto,email=email,cuenta_usuario=usuario)
-		c.save()
+		if contra != rep_contra:
+			return render(request,'index.html',{"msj":"¡ Las contraseñas no coinciden !","error":True})
+		else:
+			try:
+				usuario=User.objects.create_user(username=email,email=email,password=contra,first_name=nombre,last_name=apellido)
+			except IntegrityError:
+				return render(request,'index.html',{"msj":"¡ El usuario ya existe !","error":True})
+			usuario.save()
+			c=cliente(nombre=nombre,apellido=apellido,contacto=contacto,email=email,cuenta_usuario=usuario)
+			c.save()
 	return redirect('principal')
 
 def log(request):
@@ -40,9 +42,9 @@ def log(request):
 			login(request,user)
 			return redirect('principal')
 		else:
-			return render(request,'paginaError.html') 
+			return render(request,'index.html',{"msj":"¡ Email o Contraseña incorrectos !","error":True}) 
 	else:
-		return render(request,'index.html')
+		return redirect('principal')
 
 def cerrarSesion(request):
 	logout(request)
@@ -54,23 +56,27 @@ def principal(request):
 
 def hamburguesa_simple(request):
 
-	hamburguesa=producto.objects.filter(tipo="simple")
+	productos=producto.objects.filter(tipo="simple")
 	titulo="HAMBURGUESAS SIMPLES"
-	return render(request,"hamburguesas.html",{"titulo":titulo,"hamburguesa":hamburguesa,"tipo":True})
+	return render(request,"productos.html",{"titulo":titulo,"productos":productos,"tipo":True})
 
 
 def hamburguesa_doble(request):
-	hamburguesa=producto.objects.filter(tipo="doble")
-	tipo="doble"
+	productos=producto.objects.filter(tipo="doble")
 	titulo="HAMBURGUESAS DOBLES"
-	return render(request,"hamburguesas.html",{"titulo":titulo,"hamburguesa":hamburguesa,"tipo":False})
+	return render(request,"productos.html",{"titulo":titulo,"productos":productos,"tipo":False})
+
+def papas(request):
+	productos=producto.objects.filter(tipo="papas")
+	titulo="Papas Manhatan"
+	return render(request,"productos.html",{"titulo":titulo,"papas":papas,"productos":productos})
 
 
 def pedido(request):
 
 	id=request.POST.get('id')
 	prod=producto.objects.get(pk=id)
-	lista_datos={'nombre_producto':prod.nombre,'tipo':prod.tipo,'precio':prod.precio}
+	lista_datos={'nombre_producto':prod.nombre,'tipo':prod.tipo,'precio':prod.precio,"imagen":prod.imagen.url}
 	diccionario_json=json.dumps(lista_datos)
 	return HttpResponse(diccionario_json)
 
@@ -85,7 +91,7 @@ def realizarpedido(request):
 		c=cliente.objects.get(email=request.user.email)
 		t=int(cantidad)*p.precio
 		total=float(t)
-		pxc=producto_x_cliente(producto=p,cliente=c,cantidad=cantidad,fecha=datetime.now(),hora=datetime.now().strftime('%H:%M:%S'),direccion=direccion,total=total)
+		pxc=producto_x_cliente(producto=p,cliente=c,cantidad=cantidad,fecha=datetime.now(),hora=datetime.now().strftime('%H:%M:%S'),direccion=direccion,total=total,expiro=False)
 		pxc.save()
 		pxc.tiempo_cancelacion=pxc.fecha + timedelta(minutes=10)
 		pxc.save()
@@ -99,6 +105,12 @@ def mispedidos(request):
 	total=0
 	for p in pedidos:
 		total=total + p.total
+		if p.expiro_pedido():
+			p.expiro=True
+			p.save()
+		else:
+			p.expiro=False
+			p.save()
 	return render(request,"mispedidos.html",{"pedidos":pedidos,"total":total,"fecha_actual":datetime.now()})
 		
 

@@ -27,8 +27,6 @@
                 <!--CONTENEDOR DE HAMBURGUESAS INDIVIDUALES-->
                 {%if pedidos %}
                 	{% for pedido in pedidos %}
-
-
                 <div class="col-12 col-lg-8" id="{{pedido.id}}">
                     <!-- Single Room Area -->
                     <div class="single-room-area d-flex align-items-center mb-50 wow fadeInUp" data-wow-delay="100ms">
@@ -46,18 +44,23 @@
                             	<li>Fecha: <span>{{pedido.fecha}}</span></li>
                                 <li>Hora: <span>{{pedido.hora}}</span></li>
                                 <li>Direccion de Envio: <span>{{pedido.direccion}}</span></li>
-
                             	<hr>
                             	<li><h5>Total: ${{pedido.total}} </h5></li>
                             	</ul>
                               
                             </div>
+                            {%if pedido.expiro %}
                               <div class="d-flex justify-content-center">
                                   <span style="font-weight:bold;">Tiempo para cancelar pedido <strong style="color:red">{{pedido.tiempo_cancelacion}}</strong></span>
                                 <a href="#" class="btn btn-danger text-rigth" id="{{pedido.id}}" onclick="cancelarpedido(this.id)">Cancelar Pedido</a>
                               </div>
-            
-                               
+                            {%else%}
+                            <div class="d-flex justify-content-center">
+                              <a href="" data-toggle="modal" data-target="#modal" style="font-weight:bold;color:tomato">No es posible cancelar su Pedido , Click!</a>
+                              <a href="#" class="btn btn-danger text-rigth"  id="{{pedido.id}}" onclick="cancelarpedido(this.id)">X</a>
+
+                            </div>
+                             {%endif%} 
                         </div>
                     </div>
                 </div>
@@ -80,3 +83,36 @@
     {%endif%}
 
  {%endblock%}
+
+
+ {%block modal%}
+
+ <div class="modal fade" id="modal" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">¡ Su pedido no se puede cancelar !</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+
+         <strong>ATENCION</strong>
+            <p>Debido a la simpleza de realizar pedidos , nuestro sistema cuenta con un tiempo de 10 min a partir de que se genero el pedido, pasado este tiempo , usted no podra dar de baja el pedido! Para cualquier consulta llamar al 2302505050</p>   
+        </div>
+        <!-- Modal footer -->
+       <div class="modal-footer">
+         <div class="col-md-6 text-rigth">
+          <i style="color:teal">¡SALUDOS!</i>
+        </div>
+        </div>
+ 
+  
+      </div>
+    </div>
+  </div>
+  {%endblock%}
+  <!-- end Modal -->

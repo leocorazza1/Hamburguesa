@@ -78,7 +78,8 @@
                     <nav class="classy-navbar justify-content-between" id="robertoNav">
 
                         <!-- Logo -->
-                        <a href="http://127.0.0.1:8000/"><h4>MANHATTAN</h4></a>
+
+                        <a href="{% url "principal" %}"><h4>MANHATTAN</h4></a>
 
                         <!-- Navbar Toggler -->
                         <div class="classy-navbar-toggler">
@@ -94,14 +95,15 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li class="active"><a href="http://127.0.0.1:8000/simple/">Hamburguesas Simples</a></li>
-                                     <li><a href="http://127.0.0.1:8000/doble/">Hamburguesas Dobles</a>
+                                    <li class="active"><a href="{% url "simple" %}">Hamburguesas Simples</a></li>
+                                     <li><a href="{% url "doble" %}">Hamburguesas Dobles</a>
+                                    <li><a href="{% url "papas" %}">Papas</a>
                                     {% if not request.user.is_authenticated %}
                                     <li><a href="#" data-toggle="modal"  data-target="#modal1">Registrarse | Iniciar Sesion</a>
                                     {%else%}
-                                    <li><a href="http://127.0.0.1:8000/mispedidos/">Mis pedidos</a></li>
-                                    <li><a href="http://127.0.0.1:8000/carrito/">Mi Carrito<span class="badge badge-danger">{{cantidad}}</span></a></li>
-                                    <li><a href="http://127.0.0.1:8000/cerrarSesion/" style="color:tomato">Cerrar Sesion</a>
+                                    <li><a href="{% url "pedidos" %}">Mis pedidos</a></li>
+                                    <li><a href="{% url "carrito" %}">Mi Carrito<span class="badge badge-danger">{{cantidad}}</span></a></li>
+                                    <li><a href="{% url "cerrarsesion" %}" style="color:tomato">Cerrar Sesion</a>
                                      {%endif%}
                                 </ul>
 
@@ -113,20 +115,30 @@
             </div>
         </div>
     </header>
+
+
     
 
 
     {% block head %}
-    
+  {%if error%}  
+<div class="row">
+        <div class="col-md-4"></div>
+    <div class="col-md-4">
+    <div class="alert alert-danger alert-dismissible">
+        <button type="button" class="close" data-dismiss="alert">&times;</button>
+        <strong>NOTIFICACION: </strong> {{msj}}
+      </div>
+    </div>
+</div>
+{%endif%}
 
-
-
-
-
-
-    
     
     {%endblock%}
+
+
+
+
 
 
 <br>
@@ -150,7 +162,7 @@
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
                         <img src="{% static 'img/bg-img/h2.jpg'%}" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
-                            <a href="http://127.0.0.1:8000/simple/"><h5>Hamburguesas Simples</h5></a>
+                            <a href="{% url "simple" %}"><h5>Hamburguesas Simples</h5></a>
                         </div>
                     </div>
                 </div>
@@ -159,7 +171,7 @@
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
                         <img src="{% static 'img/bg-img/h3.jpg' %}" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
-                           <a href="http://127.0.0.1:8000/doble/"> <h5>Hamburguesas Dobles</h5></a>
+                           <a href="{% url "doble" %}"> <h5>Hamburguesas Dobles</h5></a>
                         </div>
                     </div>
                 </div>
@@ -168,7 +180,7 @@
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="500ms">
                         <img src="{% static 'img/bg-img/papas.jpg' %}" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
-                           <a href="http://127.0.0.1:8000/nosotros/"><h5>Papas</h5></a>
+                           <a href="{% url "papas" %}"><h5>Papas</h5></a>
                         </div>
                     </div>
                 </div>
@@ -187,13 +199,13 @@
       
             <!-- Modal Header -->
             <div class="modal-header">
-              <h4 class="modal-title" id="titulo">REGISTRARSE</h4>
+              <h4 class="modal-title" style="font-family: cursive;font-weight: bolder;" id="titulo" >REGISTRARSE</h4>
               <button type="button" class="close" data-dismiss="modal">&times;</button>
             </div>
       
             <!-- Modal body -->
             <div class="modal-body" id="registro">
-                  <form  method="POST" action="http://127.0.0.1:8000/registro/">
+                  <form  method="POST" action="{% url "registro" %}">
                     {% csrf_token %}
                    <div class="form-group">
                       <input type="text" class="form-control "  placeholder="Nombre" name="nombre" required="">
@@ -208,11 +220,12 @@
                             <input type="email" class="form-control "  placeholder="Email" name="email" required="">
                     </div>
                     <div class="form-group">
-                            <input type="password" class="form-control "  placeholder="Contraseña" name="contra" required="">
+                            <input type="password" class="form-control "  placeholder="Contraseña" id="contra" name="contra" required="">
                     </div>
                     <div class="form-group">
-                            <input type="password" class="form-control "  placeholder="Repetir Contraseña" id="valor" onkeypress="corroborar()" name="rep_contra" required="">
+                            <input type="password" class="form-control "  placeholder="Repetir Contraseña" id="rep_contra" name="rep_contra" required="">
                     </div>
+                    <p id="error_contrasenias" style="color:tomato; display: none;"></p>
             </div>
             <div class="modal-footer">
                     <button type="submit" class="btn btn-info" id="botonR">REGISTRARSE</button>
@@ -222,7 +235,7 @@
             </form>
 
             <div class="modal-body" id="sesion" style="display: none;">
-            <form  method="POST" action="http://127.0.0.1:8000/iniciarSesion/">
+            <form  method="POST" action="{% url "login" %}">
                       {% csrf_token %}
                       <div class="form-group">
                               <input type="email" class="form-control "  placeholder="Email" name="email" required="">
@@ -265,7 +278,7 @@
                         </div>
                     </div>
                     <div class="col-12 col-md-5 text-right">
-                        <a href="#" class="btn roberto-btn mb-50">Contactanos</a>
+                        <a href="https://wa.me/5492302502668" class="btn roberto-btn mb-50">Contactanos</a>
                     </div>
                 </div>
             </div>
@@ -337,9 +350,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 <script>
 
-
 function ocultarRegistro(){
-
 $("#registro").hide();
 $("#sesion").show();
 $("#titulo").text("Iniciar Sesion");
@@ -347,7 +358,7 @@ $("#botonR").hide();
 $("#botonI").show();
 $("#tengoCuenta").hide();
 $("#volver").show();
-}
+};
 
 $("#volver").click(function(){
     $("#titulo").text("REGISTRARSE");
@@ -359,28 +370,6 @@ $("#volver").click(function(){
     $("#botonI").hide();
 });
 
-
-function generarPedido(id){
-
-        $.post("http://127.0.0.1:8000/pedido/",
-          {
-            id: id,
-            csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
-          },
-          function(data, status){
-
-                producto=JSON.parse(data)
-                $("#nombre_producto").text("Pedido: "+producto.nombre_producto);
-                $("#tipo").text(producto.tipo);
-                $("#precio").text("$"+producto.precio);
-                $("#pk").val(id);
-                $("#modal").modal("show");
-
-        });
-          
-}
-
-
 function cancelarpedido(id)
     { 
         $.post("http://127.0.0.1:8000/cancelar/",
@@ -390,14 +379,15 @@ function cancelarpedido(id)
           },
           function(data, status){
             if(data){
-
-                  Lobibox.notify('info', {
+                var URLactual = jQuery(location).attr('href');
+                window.location.href=URLactual;
+                  /*Lobibox.notify('info', {
                     position: 'top right',
                     title: 'Notificacion',
                     msg: 'SU PEDIDO HA SIDO CANCELADO!'
                 });
 
-               $("#"+id).css("display","none");
+               $("#"+id).css("display","none");*/
             
             }
             else
@@ -466,7 +456,72 @@ function eliminardelcarrito(id){
 
 }
 
- </script>
-</body>
+function corroborar(){
 
+var pass1=document.getElementById("contra").value;
+var pass2=document.getElementById("rep_contra").value;
+
+if (pass1 !== pass2)
+{
+    return false;
+}
+if(pass1 === pass2)
+{
+   return true;
+}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function generarPedido(id){
+            $.post("http://127.0.0.1:8000/pedido/",
+              {
+                id: id,
+                csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
+              },
+              function(data, status){
+                
+                    producto=JSON.parse(data)
+                    $("#nombre_producto").text(producto.nombre_producto);
+                    $("#tipo").text(producto.tipo);
+                    $("#precio").text("$"+producto.precio);
+                    $("#pk").val(id);
+                    var imagen = document.getElementById("imagen");
+                    imagen.setAttribute("src", producto.imagen);
+                    $("#modal").modal("show");
+    
+            });
+              
+    }
+
+</script>
+
+
+
+
+
+
+
+</body>
 </html>
