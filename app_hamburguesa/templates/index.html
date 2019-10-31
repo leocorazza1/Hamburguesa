@@ -409,13 +409,15 @@ function addcarrito(id)
           },
           function(data, status){
             if(data=='True'){
+                Notification.requestPermission();
+                 var notification = new Notification("Producto añadido");
                 //var URLactual = jQuery(location).attr('href');
                 //window.location.href=URLactual;
-                Lobibox.notify('success', {
+                /*Lobibox.notify('success', {
                     position: 'top right',
                     title: 'Notificacion',
                     msg: 'AÑADIDO AL CARRITO CON EXITO'
-                });
+                });*/
 
                
             }
@@ -471,28 +473,6 @@ if(pass1 === pass2)
 }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 function generarPedido(id){
             $.post("http://127.0.0.1:8000/pedido/",

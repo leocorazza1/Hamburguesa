@@ -87,11 +87,12 @@ def realizarpedido(request):
 		direccion=request.POST['direccion']
 		cantidad=request.POST['cantidad']
 		id_producto=request.POST['id']
+		referencia=request.POST['referencia']
 		p=producto.objects.get(pk=id_producto)
 		c=cliente.objects.get(email=request.user.email)
 		t=int(cantidad)*p.precio
 		total=float(t)
-		pxc=producto_x_cliente(producto=p,cliente=c,cantidad=cantidad,fecha=datetime.now(),hora=datetime.now().strftime('%H:%M:%S'),direccion=direccion,total=total,expiro=False)
+		pxc=producto_x_cliente(producto=p,cliente=c,cantidad=cantidad,fecha=datetime.now(),hora=datetime.now().strftime('%H:%M:%S'),direccion=direccion,total=total,expiro=False,tiempo_estimado="Calculando",referencia=referencia)
 		pxc.save()
 		pxc.tiempo_cancelacion=pxc.fecha + timedelta(minutes=10)
 		pxc.save()

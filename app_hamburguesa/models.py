@@ -49,7 +49,8 @@ class producto_x_cliente(models.Model):
     total = models.FloatField(blank=True, null=True)
     tiempo_cancelacion=models.TimeField(blank=True, null=True)
     expiro = models.BooleanField(default=False,blank=True, null=False)
-
+    tiempo_estimado=models.CharField(blank=True,null=True,max_length=30)
+    referencia=models.CharField(blank=True,null=True,max_length=200)
 
     def expiro_pedido(self):
 
@@ -57,6 +58,9 @@ class producto_x_cliente(models.Model):
             return True
         else:
             return False
+
+
+
     
 
     
