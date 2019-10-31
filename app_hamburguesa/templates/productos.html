@@ -86,68 +86,71 @@
 
 {%block modal %}
  <!-- The Modal register y login-->
-<div class="modal fade" id="modal1" >
-        <div class="modal-dialog modal-dialog-centered">
-          <div class="modal-content">
-      
-            <!-- Modal Header -->
-            <div class="modal-header">
-              <h4 class="modal-title" id="titulo">REGISTRARSE</h4>
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body" id="registro">
-                  <form  method="POST" action="{% url "registro" %}">
-                    {% csrf_token %}
-                   <div class="form-group">
-                      <input type="text" class="form-control "  placeholder="Nombre" name="nombre" required="">
-                  </div>
-                  <div class="form-group">
-                      <input type="text" class="form-control "  placeholder="Apellido" name="apellido" required="">
-                  </div>
-                  <div class="form-group">
-                        <input type="text" class="form-control " i placeholder="Contacto" name="contacto" required="">
-                    </div>
-                    <div class="form-group">
-                            <input type="email" class="form-control "  placeholder="Email" name="email" required="">
-                    </div>
-                    <div class="form-group">
-                            <input type="password" class="form-control "  placeholder="Contraseña" name="contra" required="">
-                    </div>
-                    <div class="form-group">
-                            <input type="password" class="form-control "  placeholder="Repetir Contraseña" name="rep_contra" required="">
-                    </div>
-            </div>
-            <div class="modal-footer">
-                    <button type="submit" class="btn btn-info" id="botonR">REGISTRARSE</button>
-                    <button type="submit" class="btn btn-success" onclick="ocultarRegistro()" id="tengoCuenta">Ya tengo Cuenta</button>
-                    
-                  </div>
-            </form>
+ <div class="modal fade" id="modal1" >
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
 
-            <div class="modal-body" id="sesion" style="display: none;">
-            <form  method="POST" action="{% url "login" %}">
-                      {% csrf_token %}
-                      <div class="form-group">
-                              <input type="email" class="form-control "  placeholder="Email" name="email" required="">
-                      </div>
-                      <div class="form-group">
-                              <input type="password" class="form-control "  placeholder="Contraseña" name="contra" required="">
-                      </div>
-              </div>
-      
-            <!-- Modal footer -->
-           <div class="modal-footer">
-              <button type="submit" class="btn btn-success" id="botonI" style="display: none;">INGRESAR</button>
-            </div>
-          </form>
-          
-          <br>
-      
-          </div>
-        </div>
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title" style="font-family: cursive;font-weight: bolder;" id="titulo" >REGISTRARSE</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
+
+      <!-- Modal body -->
+      <div class="modal-body" id="registro">
+            <form  method="POST" action="{% url "registro" %}">
+              {% csrf_token %}
+             <div class="form-group">
+                <input type="text" class="form-control "  placeholder="Nombre" name="nombre" required="">
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control "  placeholder="Apellido" name="apellido" required="">
+            </div>
+            <div class="form-group">
+                  <input type="text" class="form-control " i placeholder="Contacto" name="contacto" required="">
+              </div>
+              <div class="form-group">
+                      <input type="email" class="form-control "  placeholder="Email" name="email" required="">
+              </div>
+              <div class="form-group">
+                      <input type="password" class="form-control "  placeholder="Contraseña" id="contra" name="contra" required="">
+              </div>
+              <div class="form-group">
+                      <input type="password" class="form-control "  placeholder="Repetir Contraseña" id="rep_contra" name="rep_contra" required="">
+              </div>
+              <p id="error_contrasenias" style="color:tomato; display: none;"></p>
+      </div>
+      <div class="modal-footer">
+              <button type="submit" class="btn btn-info" id="botonR">REGISTRARSE</button>
+              <button type="submit" class="btn btn-outline-success" onclick="ocultarRegistro()" id="tengoCuenta">Ya tengo Cuenta</button>
+              
+            </div>
+      </form>
+
+      <div class="modal-body" id="sesion" style="display: none;">
+      <form  method="POST" action="{% url "login" %}">
+                {% csrf_token %}
+                <div class="form-group">
+                        <input type="email" class="form-control "  placeholder="Email" name="email" required="">
+                </div>
+                <div class="form-group">
+                        <input type="password" class="form-control " id="contra" placeholder="Contraseña" name="contra" required="">
+                </div>
+        </div>
+
+      <!-- Modal footer -->
+     <div class="modal-footer">
+          <button type="button" class="btn btn-outline-primary" id="volver" style="display: none;">Volver</button>
+        <button type="submit" class="btn btn-success" id="botonI" style="display: none;">INGRESAR</button>
+        
+      </div>
+    </form>
+    
+    <br>
+
+    </div>
+  </div>
+</div>
  <!-- fin -->
 
 
