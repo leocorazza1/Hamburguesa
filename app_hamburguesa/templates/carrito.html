@@ -89,7 +89,7 @@
       
             <!-- Modal body -->
             <div class="modal-body">
-                  <form  method="POST" action="http://127.0.0.1:8000/realizarpedido/">
+                  <form  method="POST" action="{% url "realizarP" %}">
                       {% csrf_token %}
                 <div class="single-recent-post d-flex">
                                       <!-- Thumb -->
