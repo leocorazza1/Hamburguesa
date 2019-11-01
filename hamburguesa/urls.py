@@ -26,6 +26,6 @@ urlpatterns = [
     url(r'^carrito/', carritos , name="carrito"),
     url(r'^addcarrito/', addcarrito, name="addcarrito"),
     url(r'^delcarrito/', eliminardelCarrito , name="delcarrito"),
-    url(r'^nosotros/', nosotros),
+    url(r'^novedades/', novedades, name="novedades"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -146,5 +146,6 @@ def eliminardelCarrito(request):
 	carrito.objects.get(productoC=p,clienteC=c).delete()
 	return HttpResponse(True)
 
-def nosotros(request):
-	return render(request,"nosotros.html",{"usuario":True,"cantidad":cantidad})
+def novedades(request):
+
+	return render(request,"nosotros.html")
