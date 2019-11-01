@@ -8,7 +8,7 @@ class clienteAdmin(admin.ModelAdmin):
 	list_display=('nombre','apellido','email','contacto')
 
 class producto_x_clienteAdmin(admin.ModelAdmin):
-	list_display=('cliente','producto','cantidad','direccion','referencia','fecha','hora','tiempo_cancelacion','total','tiempo_estimado')
+	list_display=('cliente','producto','cantidad','direccion','referencia','fecha','hora','tiempo_cancelacion','total','tiempo_estimado','expiro')
 
 class CarritoAdmin(admin.ModelAdmin):
 	list_display=('productoC','clienteC')

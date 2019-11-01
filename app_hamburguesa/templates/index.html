@@ -321,7 +321,7 @@
                         <!-- Copywrite Text -->
                         <div class="copywrite-text">
                             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script>Todos los derechos reservados | Desarrollado por  <!--All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>-->
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
                         </div>
                     </div>
@@ -360,6 +360,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 
 <script>
 
+
+var path="http://127.0.0.1:8000";
 function ocultarRegistro(){
 $("#registro").hide();
 $("#sesion").show();
@@ -382,7 +384,7 @@ $("#volver").click(function(){
 
 function cancelarpedido(id)
     { 
-        $.post("http://127.0.0.1:8000/cancelar/",
+        $.post(path+"/cancelar/",
           {
             id: id,
             csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
@@ -412,7 +414,7 @@ function cancelarpedido(id)
 
 function addcarrito(id)
     { 
-        $.post("http://127.0.0.1:8000/addcarrito/",
+        $.post(path+"/addcarrito/",
           {
             id: id,
             csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
@@ -447,7 +449,7 @@ function addcarrito(id)
 
 function eliminardelcarrito(id){
 
-    $.post("http://127.0.0.1:8000/delcarrito/",
+    $.post(path+"/delcarrito/",
           {
             id: id,
             csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
@@ -485,7 +487,7 @@ if(pass1 === pass2)
 }
 
 function generarPedido(id){
-            $.post("http://127.0.0.1:8000/pedido/",
+            $.post(path+"/pedido/",
               {
                 id: id,
                 csrfmiddlewaretoken: '{{ csrf_token }}' //LINEA SUPER IMPORTANTE
@@ -504,6 +506,9 @@ function generarPedido(id){
             });
               
     }
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();   
+});
 
 </script>
 
