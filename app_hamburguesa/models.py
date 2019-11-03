@@ -67,6 +67,9 @@ class producto_x_cliente(models.Model):
 class carrito(models.Model):
     productoC=models.ForeignKey(producto, on_delete=models.CASCADE,blank=True, null=True)
     clienteC=models.ForeignKey(cliente, on_delete=models.CASCADE,blank=True, null=True)
+
+    def calcularElementos(self):
+        return len(self.objects.all())
     
 
     

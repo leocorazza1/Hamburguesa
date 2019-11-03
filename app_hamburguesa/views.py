@@ -105,11 +105,11 @@ def mispedidos(request):
 	pedidos=producto_x_cliente.objects.filter(cliente=c,fecha=datetime.now()).order_by('-hora')
 	total=0
 	for p in pedidos:
+		total=total + p.total
 		if p.expiro_pedido():
 			p.expiro=True
 			p.save()
 		else:
-			total=total + p.total
 			p.expiro=False
 			p.save()
 	return render(request,"mispedidos.html",{"pedidos":pedidos,"total":total,"fecha_actual":datetime.now()})
@@ -147,8 +147,6 @@ def eliminardelCarrito(request):
 	return HttpResponse(True)
 
 def novedades(request):
-
 	return render(request,"nosotros.html")
-
 
 

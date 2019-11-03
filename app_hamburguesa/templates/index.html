@@ -421,25 +421,14 @@ function addcarrito(id)
           },
           function(data, status){
             if(data=='True'){
-                Notification.requestPermission();
-                 var notification = new Notification("Producto añadido");
-                //var URLactual = jQuery(location).attr('href');
-                //window.location.href=URLactual;
-                /*Lobibox.notify('success', {
-                    position: 'top right',
-                    title: 'Notificacion',
-                    msg: 'AÑADIDO AL CARRITO CON EXITO'
-                });*/
 
-               
+            $("#"+id).show();
+
             }
             else
                 {
-                    Lobibox.notify('info', {
-                    position: 'top right',
-                    title: 'Notificacion',
-                    msg: 'Este elemento ya se añadio al carrito'
-                });
+                    alert("#"+id)
+                    $("#"+id).show();
 
                 }
 

@@ -57,8 +57,11 @@
                             {% if request.user.is_authenticated %}   
                               <div class="d-flex justify-content-center mb-3">
                                 <div class="p-2"> <a href="#" class="btn btn-outline-success" id="{{p.pk}}" data-toggle="modal" onclick="generarPedido(this.id)">Pedir Ahora</a></div>
-
+                                
                                 <div class="p-2"><a href="#" class="btn btn-outline-info text-rigth" id="{{p.pk}}" onclick="addcarrito(this.id)">Añadir al Carrito</a>
+
+                            
+                            
                               </div>
 
                               </div>  
