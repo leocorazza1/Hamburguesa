@@ -45,11 +45,11 @@
                                     </div>
                                 </td>
                                 <td>{{p.productoC.nombre}}<br>
-                                    <span style="color:green;display:none;">Pedido</span>
+                                    <strong style="color:green;display:none;" class="msj_pedido">Pedido</strong>
                                 </td>
                                 <td class="d-flex">
                                     <div class="p-2"><a href="#" id="{{p.productoC.pk}}" onclick="generarPedido(this.id)" class="btn btn-success">Pedir</a></div>
-                                    <div class="p-2"><a href="#" id="{{p.productoC.pk}}" onclick="eliminardelcarrito(this.id)" class="btn btn-danger">Eliminar</a></div>
+                                    <div class="p-2"><a href="#" id="{{p.productoC.pk}}" onclick="eliminardelcarrito(this.id,false)" class="btn btn-danger">Eliminar</a></div>
                                     
                                 </td>
                          </tr>
@@ -135,14 +135,77 @@
         </div>
       </div>
       <hr>
+      {%if carrito %}
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8" style="text-align:right;">
-        <button type="button" class="btn btn-outline-primary">Pedir Todo</button>
-        <button type="button" class="btn btn-outline-danger">Eliminar Todo</button>
+        <button type="button" class="btn btn-outline-success" data-toggle="modal" data-target="#modalpedirtodo">Pedir Todo</button>
+        <button type="button" class="btn btn-outline-danger" onclick="eliminardelcarrito(1,true)">Eliminar Todo</button>
       </div>
-  
-        
-     
     </div>
+    {%endif%}
+
+
+<!--MODAL PARA CUANDO SE PIDE TODO-->
+
+<div class="modal fade" id="modalpedirtodo" >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+  
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Pedir Todo</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="modal-body">
+            
+              {% for p in carrito %}
+                {% csrf_token %}
+            <form method="POST" action="">
+                <div class="d-flex justify-content-between mb-3">
+                  <div class="p-2">
+                    <img src="{{p.productoC.imagen.url}}" style="width:80px;height:80px;" alt="">
+                  </div>
+                  <div class="p-2">
+                    <span>{{p.productoC.nombre}}</span>
+
+                  </div>
+                  <div class="p-2">
+
+                    <select  id="cantidad_elementos" class="form-control">
+                      <option >1</option>
+                      <option >2</option>
+                      <option >3</option>
+                      <option >4</option>
+                      <option >5</option>
+                      <option >6</option>
+                      <option >7</option>
+                      <option >8</option>
+                  </select>
+
+                  </div>
+                </div>
+                <input type="hidden" class="form-control" id="id_producto" value="{{p.productoC.pk}}">
+              </form>
+              {%endfor%}
+              <input  style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:19px;color:gray;margin-top:2%;;" type="text" class="form-control" id="direccion_carrito" placeholder="Direccion de envio" required="Completa el campo">
+              <span style="color:tomato;display:none;" id="msj_error_">Completa este campo</span>
+              <input  style="font-family:Verdana, Geneva, Tahoma, sans-serif;font-size:18px;color:MediumSeaGreen;margin-top:2%;;" type="text" class="form-control" id="referencia_carrito" placeholder="Referencia Ej:Casa rejas negras" required="">
+              <hr>
+              
+      </div>
+        <!-- Modal footer -->
+       <div class="modal-footer row">
+         <div class="col-md-6">
+          <button type="submit" style="width:100%;" class="btn btn-info" data-dismiss="modal" id="pedirtodo" onclick="pedir_todo()">PEDIR</button>
+        </div>
+        </div>
+
+  
+      </div>
+    </div>
+  </div>
+
 {%endblock%}

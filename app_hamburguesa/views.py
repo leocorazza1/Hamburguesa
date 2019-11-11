@@ -96,9 +96,10 @@ def realizarpedido(request):
 		pxc.save()
 		pxc.tiempo_cancelacion=pxc.fecha + timedelta(minutes=10)
 		pxc.save()
-	return redirect('pedidos')
+		return redirect('pedidos')
 
-
+	return HttpResponse(False)
+	
 def mispedidos(request):
 
 	c = cliente.objects.get(email=request.user.email)
@@ -124,6 +125,7 @@ def carritos(request):
 
 	cli=cliente.objects.get(email=request.user.email)
 	c=carrito.objects.filter(clienteC=cli)
+	
 	return render(request,"carrito.html",{"carrito":c})
 
 def addcarrito(request):
@@ -139,14 +141,26 @@ def addcarrito(request):
 		return HttpResponse(True)
 
 def eliminardelCarrito(request):
-	
-	id_producto=request.POST.get('id')
-	p=producto.objects.get(pk=id_producto)
-	c=cliente.objects.get(email=request.user.email)
-	carrito.objects.get(productoC=p,clienteC=c).delete()
-	return HttpResponse(True)
+	if request.method == 'POST':
+		all=request.POST.get('all')
+		if all == 'false':
+			id_producto=request.POST.get('id')
+			p=producto.objects.get(pk=id_producto)
+			c=cliente.objects.get(email=request.user.email)
+			carrito.objects.get(productoC=p,clienteC=c).delete()
+			return HttpResponse(True)
+		if all == 'true':
+			c=cliente.objects.get(email=request.user.email)
+			carrito.objects.filter(clienteC=c).delete()
+
+	return redirect('carrito')
+		
 
 def novedades(request):
 	return render(request,"nosotros.html")
+
+
+	
+
 
 
