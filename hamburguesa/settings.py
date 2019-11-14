@@ -25,7 +25,7 @@ SECRET_KEY = '(jdr^no+&yk82a7rp0lc80p)p*2#z!rupqpz+nz*!b_6kbdc0m'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1']
 
 
 # Application definition
@@ -83,6 +83,14 @@ DATABASES = {
 }
 
 
+
+#configuracion de email
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'leocorazza1234@gmail.com'
+EMAIL_HOST_PASSWORD = 'nahuelmateriales1'
+EMAIL_PORT = 587
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
@@ -114,3 +122,5 @@ STATICFILES_FINDERS = [
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
 MEDIA_URL = '/media/'
+
+#LOGIN_URL='/principal/'

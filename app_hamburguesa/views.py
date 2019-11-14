@@ -3,12 +3,15 @@ from django.shortcuts import redirect
 from app_hamburguesa.models import *
 from django.http import HttpResponse, HttpResponseRedirect
 import json
+from django.contrib.auth.decorators import login_required
 from datetime import datetime,timedelta
 import time
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.db.utils import IntegrityError
 from django.contrib.auth.models import User
+from django.core.mail import EmailMessage
+
 
 
 def registrar(request):
@@ -42,6 +45,7 @@ def log(request):
 			login(request,user)
 			return redirect('principal')
 		else:
+
 			return render(request,'index.html',{"msj":"¡ Email o Contraseña incorrectos !","error":True}) 
 	else:
 		return redirect('principal')
@@ -96,10 +100,12 @@ def realizarpedido(request):
 		pxc.save()
 		pxc.tiempo_cancelacion=pxc.fecha + timedelta(minutes=10)
 		pxc.save()
+		#email = EmailMessage('PEDIDO', 'SE INGRESO UN NUEVO PEDIDO', to=['leocorazza1234@gmail.com'])
+		#email.send()
 		return redirect('pedidos')
 
 	return HttpResponse(False)
-	
+
 def mispedidos(request):
 
 	c = cliente.objects.get(email=request.user.email)
@@ -119,6 +125,8 @@ def mispedidos(request):
 def cancelarpedido(request):
 	id_pedido=request.POST.get("id")
 	producto_x_cliente.objects.get(pk=id_pedido).delete()
+	#email = EmailMessage('PEDIDO CANCELADO', 'SE HA CANCELADO UN PEDIDO', to=['leocorazza1234@gmail.com'])
+	#email.send()
 	return HttpResponse(True)
 
 def carritos(request):
@@ -158,9 +166,52 @@ def eliminardelCarrito(request):
 
 def novedades(request):
 	return render(request,"nosotros.html")
-
-
 	
+
+def cambiarpassword(request):
+	if request.method == 'POST':
+		c=cliente.objects.get(email=request.user.email)
+		usuario=c.cuenta_usuario
+		pass_vieja=request.POST['pass_anterior']
+		pass_nueva=request.POST['pass_nueva']
+		rep_pass=request.POST['pass_rep']
+		if usuario.check_password(pass_vieja):
+
+			if pass_nueva == rep_pass:
+				
+				usuario.set_password(pass_nueva)
+				usuario.save()
+				logout(request)
+				return render(request,"index.html",{"color":True})
+				
+			else:
+				return render(request,"index.html",{"msj":"Las contraseñas nuevas no coinciden","error":True})
+		else:
+			return render(request,"index.html",{"msj":"La contraseña vieja no coincide","error":True})
+	return redirect('principal')
+
+
+def recuperarpassword(request):
+	return HttpResponse("s")
+
+def perfil(request):
+	c=cliente.objects.get(email=request.user.email)
+	
+	return render(request,'perfil.html',{"cliente":c})
+
+
+
+
+
+
+
+		
+
+
+
+
+
+
 
 
 

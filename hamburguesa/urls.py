@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^$', principal , name='principal'),
     url(r'^registro/', registrar ,name="registro"),
     url(r'^iniciarSesion/', log, name="login"),
+    url(r'^cambiarpassword/', cambiarpassword, name="cambiarpass"),
     url(r'^cerrarSesion/', cerrarSesion, name="cerrarsesion"),
     url(r'^simple/', hamburguesa_simple , name='simple'),
     url(r'^doble/', hamburguesa_doble , name='doble'),
@@ -27,5 +28,7 @@ urlpatterns = [
     url(r'^addcarrito/', addcarrito, name="addcarrito"),
     url(r'^delcarrito/', eliminardelCarrito , name="delcarrito"),
     url(r'^novedades/', novedades, name="novedades"),
+    url(r'^recuperarpass/', recuperarpassword, name="recuperarpass"),
+    url(r'^perfil/', perfil, name="perfil"),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

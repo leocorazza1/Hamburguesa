@@ -98,8 +98,8 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul id="nav">
-                                    <li class="active"><a href="{% url "simple" %}">Hamburguesas Simples</a></li>
-                                    <li><a href="{% url "doble" %}">Hamburguesas Dobles</a>
+                                    <li class="active"><a href="{% url "simple" %}">Hamburguesas</a></li>
+                                   <!-- <li><a href="{% url "doble" %}">Hamburguesas Dobles</a>-->
                                     <li><a href="{% url "papas" %}">Papas</a>
                                         {% if not request.user.is_authenticated %}
                                     <li><a href="#" data-toggle="modal" data-target="#modal1">Registrarse | Iniciar
@@ -108,7 +108,14 @@
                                     <li><a href="{% url "pedidos" %}">Mis pedidos</a></li>
                                     <li><a href="{% url "carrito" %}">Mi Carrito<span
                                                 class="badge badge-danger">{{cantidad}}</span></a></li>
-                                    <li><a href="{% url "cerrarsesion" %}" style="color:tomato">Cerrar Sesion</a>
+                                                <li><a href="#">Mi Cuenta</a>
+                                                    <ul class="dropdown">
+                                                        <li><a href="{% url "perfil" %}">Mi Perfil</a></li>
+                                                        <li><a href="" data-toggle="modal" data-target="#modalchangepassword" >Cambiar Contraseña</a></li>
+                                                        <li><a href="{% url "cerrarsesion" %}" style="color:tomato">Cerrar Sesion</a>
+                                                    </ul>
+                                                </li>    
+                                    
                                         {%endif%}
                                 </ul>
 
@@ -129,6 +136,18 @@
             <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <strong>NOTIFICACION: </strong> {{msj}}
+            </div>
+        </div>
+    </div>
+    {%endif%}
+    
+    {%if color%}
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+            <div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                <strong>NOTIFICACION: </strong> ¡ Contraseña cambiada con EXITO, inicia sesion nuevamente!
             </div>
         </div>
     </div>
@@ -163,13 +182,13 @@
                         <img src="{% static 'img/bg-img/h2.jpg'%}" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
                             <a href="{% url "simple" %}">
-                                <h5>Hamburguesas Simples</h5>
+                                <h5>Hamburguesas</h5>
                             </a>
                         </div>
                     </div>
                 </div>
 
-                <div class="col-12 col-md-6 col-lg-4">
+                <!--<div class="col-12 col-md-6 col-lg-4">
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="300ms">
                         <img src="{% static 'img/bg-img/h3.jpg' %}" alt="">
                         <div class="service-title d-flex align-items-center justify-content-center">
@@ -178,7 +197,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <!-- area servicio  -->
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="single-service-area mb-100 wow fadeInUp" data-wow-delay="500ms">
@@ -209,6 +228,8 @@
             {% endblock %}
         </div>
     </section>
+
+
 
 
 
@@ -274,10 +295,15 @@
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
+                       
                     <button type="button" class="btn btn-outline-primary" id="volver"
                         style="display: none;">Volver</button>
                     <button type="submit" class="btn btn-success" id="botonI" style="display: none;">INGRESAR</button>
-
+                   
+                </div>
+                <div><a href="#" style="color:midnightblue;font-size:13px;text-decoration:underline;margin-left:2%;;" >Olvide mi contraseña</a></div>
+                <div class="form-group">
+                        <input type="email" class="form-control " placeholder="Email" name="email" required="">
                 </div>
                 </form>
 
@@ -286,9 +312,54 @@
             </div>
         </div>
     </div>
+
+<!--MODAL PARA CAMBIAR LA CONTRASEÑA-->
+
+<div class="modal fade" id="modalchangepassword">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" style="font-family: cursive;font-weight: bolder;" >Cambiar Contraseña
+                </h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <div class="modal-body">
+                <form method="POST" action="{% url "cambiarpass" %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group ">
+                        <input type="password" class="form-control " placeholder="Contraseña Anterior" name="pass_anterior" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control " placeholder="Contraseña nueva" name="pass_nueva"
+                            required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control " placeholder="Repetir contraseña" name="pass_rep"
+                            required="">
+                    </div>
+            </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-success">Cambiar</button>
+
+            </div>
+            </form>
+
+            <br>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+
     {%endblock%}
-
-
 
     <br><br>
     <br>
@@ -341,7 +412,7 @@
                                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                             Copyright &copy;
                                             <script>document.write(new Date().getFullYear());</script>Todos los derechos
-                                            reservados | Desarrollado por
+                                            reservados | Desarrollado por Atlantic
                                             <!--All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>-->
                                             <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
                                         </p>
@@ -379,6 +450,8 @@
                     <script src="{% static 'js/notifications.js'%}"></script>
 
                     <script src="{% static 'js/demo.js'%}"></script>
+                    <script src="{% static 'js/manhattan.js'%}"></script>
+
 
                     <script>
 
