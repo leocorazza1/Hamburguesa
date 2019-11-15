@@ -54,7 +54,6 @@ def cerrarSesion(request):
 	logout(request)
 	return redirect('principal')
 
-
 def principal(request):
 	return render(request,"index.html")
 
@@ -63,7 +62,6 @@ def hamburguesa_simple(request):
 	productos=producto.objects.filter(tipo="simple")
 	titulo="HAMBURGUESAS SIMPLES"
 	return render(request,"productos.html",{"titulo":titulo,"productos":productos,"tipo":True})
-
 
 def hamburguesa_doble(request):
 	productos=producto.objects.filter(tipo="doble")
@@ -74,7 +72,6 @@ def papas(request):
 	productos=producto.objects.filter(tipo="papas")
 	titulo="Papas Manhatan"
 	return render(request,"productos.html",{"titulo":titulo,"papas":papas,"productos":productos})
-
 
 def pedido(request):
 
@@ -121,7 +118,6 @@ def mispedidos(request):
 			p.save()
 	return render(request,"mispedidos.html",{"pedidos":pedidos,"total":total,"fecha_actual":datetime.now()})
 		
-
 def cancelarpedido(request):
 	id_pedido=request.POST.get("id")
 	producto_x_cliente.objects.get(pk=id_pedido).delete()
@@ -163,11 +159,9 @@ def eliminardelCarrito(request):
 
 	return redirect('carrito')
 		
-
 def novedades(request):
 	return render(request,"nosotros.html")
 	
-
 def cambiarpassword(request):
 	if request.method == 'POST':
 		c=cliente.objects.get(email=request.user.email)
@@ -190,13 +184,11 @@ def cambiarpassword(request):
 			return render(request,"index.html",{"msj":"La contraseña vieja no coincide","error":True})
 	return redirect('principal')
 
-
 def recuperarpassword(request):
 	return HttpResponse("s")
 
 def perfil(request):
 	c=cliente.objects.get(email=request.user.email)
-	
 	return render(request,'perfil.html',{"cliente":c})
 
 

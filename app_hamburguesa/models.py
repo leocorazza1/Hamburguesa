@@ -51,9 +51,10 @@ class producto_x_cliente(models.Model):
     expiro = models.BooleanField(default=False,blank=True, null=False)
     tiempo_estimado=models.CharField(blank=True,null=True,max_length=30)
     referencia=models.CharField(blank=True,null=True,max_length=200)
+    entregado=models.BooleanField(default=False)
 
     def expiro_pedido(self):
-
+        
         if self.tiempo_cancelacion > datetime.datetime.now().time():
             return True
         else:
@@ -61,12 +62,14 @@ class producto_x_cliente(models.Model):
 
 
 
-    
+
 
     
 class carrito(models.Model):
     productoC=models.ForeignKey(producto, on_delete=models.CASCADE,blank=True, null=True)
     clienteC=models.ForeignKey(cliente, on_delete=models.CASCADE,blank=True, null=True)
+
+
 
     
 

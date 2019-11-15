@@ -8,7 +8,7 @@ class clienteAdmin(admin.ModelAdmin):
 	list_display=('nombre','apellido','email','contacto')
 
 class producto_x_clienteAdmin(admin.ModelAdmin):
-	list_display=('cliente','producto','cantidad','direccion','referencia','fecha','hora','tiempo_cancelacion','total','tiempo_estimado','expiro')
+	list_display=('cliente','producto','cantidad','direccion','referencia','fecha','hora','tiempo_cancelacion','total','tiempo_estimado','expiro','entregado')
 
 class CarritoAdmin(admin.ModelAdmin):
 	list_display=('productoC','clienteC')
@@ -19,3 +19,6 @@ admin.site.register(cliente,clienteAdmin)
 admin.site.register(producto_x_cliente,producto_x_clienteAdmin)
 admin.site.register(carrito,CarritoAdmin)
 admin.site.register(aderezo)
+
+
+
